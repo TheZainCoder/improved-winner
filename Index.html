@@ -1,0 +1,1617 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artisan Roast & Co. | Handcrafted Coffee & Fine Pastries</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              espresso: {
+                50: "#FDFBF7",
+                100: "#F7F2EA",
+                200: "#EADECF",
+                300: "#D5C2AA",
+                400: "#BC9F80",
+                500: "#A17D5B",
+                600: "#846042",
+                700: "#684932",
+                800: "#4D3424",
+                900: "#322117",
+                950: "#1C120C",
+              },
+              amber: {
+                gold: "#D4AF37",
+                warm: "#E5A93C",
+              },
+              cream: "#FBF9F5",
+            },
+            fontFamily: {
+              serif: ["Playfair Display", "serif"],
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f7f2ea;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #bc9f80;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #846042;
+      }
+
+      /* Glassmorphic backdrop */
+      .glass-panel {
+        background: rgba(253, 251, 247, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+
+      .glass-dark {
+        background: rgba(28, 18, 12, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+
+      /* Hero Text Gradient */
+      .text-gradient {
+        background: linear-gradient(135deg, #f7f2ea 0%, #d5c2aa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Toast Animation */
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      @keyframes slideOutRight {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+      .toast-enter {
+        animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      .toast-exit {
+        animation: slideOutRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-espresso-50 text-espresso-900 font-sans antialiased flex flex-col min-h-screen"
+  >
+    <!-- NAVIGATION BAR -->
+    <header
+      class="fixed top-0 left-0 right-0 z-40 transition-all duration-300"
+      id="navbar"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="flex items-center justify-between h-20 border-b border-espresso-200/30"
+        >
+          <!-- Brand Logo -->
+          <a href="#" class="flex items-center gap-3 group">
+            <div
+              class="w-10 h-10 rounded-full bg-espresso-900 flex items-center justify-center text-amber-warm group-hover:scale-105 transition-transform"
+            >
+              <i data-lucide="coffee" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <span
+                class="font-serif text-xl sm:text-2xl font-bold tracking-tight text-espresso-950 block leading-none"
+                >Artisan Roast</span
+              >
+              <span
+                class="text-[10px] tracking-widest text-espresso-500 uppercase font-semibold"
+                >& Co. Established 2018</span
+              >
+            </div>
+          </a>
+
+          <!-- Desktop Nav Links -->
+          <nav
+            class="hidden md:flex items-center gap-8 text-sm font-medium text-espresso-800"
+          >
+            <a href="#menu" class="hover:text-amber-warm transition-colors"
+              >Menu</a
+            >
+            <a href="#quiz" class="hover:text-amber-warm transition-colors"
+              >Brew Quiz</a
+            >
+            <a href="#about" class="hover:text-amber-warm transition-colors"
+              >Our Beans</a
+            >
+            <a href="#location" class="hover:text-amber-warm transition-colors"
+              >Visit Us</a
+            >
+            <a href="#reviews" class="hover:text-amber-warm transition-colors"
+              >Reviews</a
+            >
+          </nav>
+
+          <!-- Actions (Reservation + Cart) -->
+          <div class="flex items-center gap-4">
+            <button
+              onclick="openModal('reservationModal')"
+              class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-espresso-800 text-espresso-900 text-sm font-medium hover:bg-espresso-900 hover:text-white transition-all duration-200"
+            >
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+              Reserve Table
+            </button>
+
+            <!-- Cart Trigger Button -->
+            <button
+              onclick="toggleCart(true)"
+              class="relative p-2.5 rounded-full bg-espresso-900 text-cream hover:bg-espresso-800 transition-colors shadow-md"
+            >
+              <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+              <span
+                id="cartBadge"
+                class="absolute -top-1 -right-1 bg-amber-warm text-espresso-950 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center scale-0 transition-transform duration-200"
+                >0</span
+              >
+            </button>
+
+            <!-- Mobile Menu Button -->
+            <button
+              onclick="toggleMobileMenu()"
+              class="md:hidden p-2 text-espresso-900"
+            >
+              <i data-lucide="menu" id="menuIcon" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Nav Menu -->
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden bg-cream border-b border-espresso-200 px-4 pt-2 pb-6 space-y-3 shadow-xl"
+      >
+        <a
+          href="#menu"
+          onclick="toggleMobileMenu()"
+          class="block py-2 text-espresso-900 font-medium"
+          >Menu</a
+        >
+        <a
+          href="#quiz"
+          onclick="toggleMobileMenu()"
+          class="block py-2 text-espresso-900 font-medium"
+          >Brew Quiz</a
+        >
+        <a
+          href="#about"
+          onclick="toggleMobileMenu()"
+          class="block py-2 text-espresso-900 font-medium"
+          >Our Beans</a
+        >
+        <a
+          href="#location"
+          onclick="toggleMobileMenu()"
+          class="block py-2 text-espresso-900 font-medium"
+          >Visit Us</a
+        >
+        <a
+          href="#reviews"
+          onclick="toggleMobileMenu()"
+          class="block py-2 text-espresso-900 font-medium"
+          >Reviews</a
+        >
+        <button
+          onclick="
+            toggleMobileMenu();
+            openModal('reservationModal');
+          "
+          class="w-full mt-2 py-2.5 rounded-full bg-espresso-900 text-cream text-center text-sm font-medium"
+        >
+          Reserve Table
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-grow pt-20">
+      <!-- HERO SECTION -->
+      <section
+        class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-espresso-950 text-cream"
+      >
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0 opacity-40">
+          <img
+            src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1920&q=80"
+            alt="Coffee Pouring Background"
+            class="w-full h-full object-cover"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-espresso-950 via-espresso-950/60 to-transparent"
+          ></div>
+        </div>
+
+        <div
+          class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20"
+        >
+          <span
+            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-espresso-900/80 border border-espresso-700/50 text-amber-warm text-xs font-semibold tracking-wider uppercase mb-6 backdrop-blur-md"
+          >
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Single-Origin
+            Specialty Coffee
+          </span>
+          <h1
+            class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-6 leading-tight text-cream"
+          >
+            Mastering the Art of <br />
+            <span class="italic font-normal text-amber-warm"
+              >Every Single Pour</span
+            >
+          </h1>
+          <p
+            class="text-lg sm:text-xl text-espresso-200 max-w-2xl mx-auto font-light mb-10 leading-relaxed"
+          >
+            Savor meticulously roasted single-origin beans, precision
+            extraction, and freshly baked artisanal pastries delivered right to
+            your table or doorstep.
+          </p>
+
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a
+              href="#menu"
+              class="w-full sm:w-auto px-8 py-4 rounded-full bg-amber-warm hover:bg-amber-gold text-espresso-950 font-bold transition-all transform hover:-translate-y-0.5 shadow-lg shadow-amber-warm/20 text-center"
+            >
+              Explore Our Menu
+            </a>
+            <a
+              href="#quiz"
+              class="w-full sm:w-auto px-8 py-4 rounded-full bg-espresso-900/80 hover:bg-espresso-800 text-cream font-medium border border-espresso-700/60 backdrop-blur-md transition-all text-center flex items-center justify-center gap-2"
+            >
+              <i data-lucide="compass" class="w-5 h-5 text-amber-warm"></i> Find
+              Your Brew
+            </a>
+          </div>
+
+          <!-- Stats Strip -->
+          <div
+            class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 pt-10 border-t border-espresso-800/60 text-left max-w-4xl mx-auto"
+          >
+            <div>
+              <div class="font-serif text-3xl font-bold text-amber-warm">
+                100%
+              </div>
+              <div
+                class="text-xs text-espresso-300 uppercase tracking-wider mt-1"
+              >
+                Arabica Single Origin
+              </div>
+            </div>
+            <div>
+              <div class="font-serif text-3xl font-bold text-amber-warm">
+                88+
+              </div>
+              <div
+                class="text-xs text-espresso-300 uppercase tracking-wider mt-1"
+              >
+                Cupping Specialty Score
+              </div>
+            </div>
+            <div>
+              <div class="font-serif text-3xl font-bold text-amber-warm">
+                12 min
+              </div>
+              <div
+                class="text-xs text-espresso-300 uppercase tracking-wider mt-1"
+              >
+                Average Prep & Serve
+              </div>
+            </div>
+            <div>
+              <div class="font-serif text-3xl font-bold text-amber-warm">
+                4.9 ★
+              </div>
+              <div
+                class="text-xs text-espresso-300 uppercase tracking-wider mt-1"
+              >
+                Over 2,500 Reviews
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE MENU SECTION -->
+      <section id="menu" class="py-20 bg-espresso-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <!-- Section Header -->
+          <div class="text-center max-w-2xl mx-auto mb-12">
+            <span
+              class="text-amber-warm font-semibold text-sm tracking-widest uppercase"
+              >Handcrafted Selection</span
+            >
+            <h2
+              class="font-serif text-3xl sm:text-5xl font-bold text-espresso-950 mt-2"
+            >
+              Curated Cafe Menu
+            </h2>
+            <p class="text-espresso-600 mt-4">
+              Every cup and pastry is prepared fresh to order using strictly
+              organic ingredients and ethical single-origin beans.
+            </p>
+          </div>
+
+          <!-- Menu Tabs -->
+          <div
+            class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10"
+            id="menuTabs"
+          >
+            <button
+              onclick="filterMenu('all')"
+              class="tab-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-espresso-900 text-cream shadow-md"
+              data-category="all"
+            >
+              All Items
+            </button>
+            <button
+              onclick="filterMenu('espresso')"
+              class="tab-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-espresso-100 text-espresso-800 hover:bg-espresso-200"
+              data-category="espresso"
+            >
+              Espresso & Hot Coffee
+            </button>
+            <button
+              onclick="filterMenu('coldbrew')"
+              class="tab-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-espresso-100 text-espresso-800 hover:bg-espresso-200"
+              data-category="coldbrew"
+            >
+              Special Cold Brews
+            </button>
+            <button
+              onclick="filterMenu('teas')"
+              class="tab-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-espresso-100 text-espresso-800 hover:bg-espresso-200"
+              data-category="teas"
+            >
+              Handcrafted Teas
+            </button>
+            <button
+              onclick="filterMenu('pastries')"
+              class="tab-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-espresso-100 text-espresso-800 hover:bg-espresso-200"
+              data-category="pastries"
+            >
+              Fresh Pastries
+            </button>
+          </div>
+
+          <!-- Menu Grid -->
+          <div
+            id="menuGrid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            <!-- Dynamic rendering via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- BREW QUIZ WIDGET -->
+      <section
+        id="quiz"
+        class="py-20 bg-espresso-900 text-cream relative overflow-hidden"
+      >
+        <div
+          class="absolute -right-20 -bottom-20 w-96 h-96 bg-amber-warm/10 rounded-full blur-3xl"
+        ></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="text-center mb-10">
+            <span
+              class="text-amber-warm font-semibold text-sm tracking-widest uppercase"
+              >Personalized Recommendation</span
+            >
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-2">
+              Find Your Perfect Brew
+            </h2>
+            <p class="text-espresso-300 mt-2">
+              Answer 4 quick questions and let our master barista algorithm
+              match your palate.
+            </p>
+          </div>
+
+          <!-- Quiz Box -->
+          <div
+            class="bg-espresso-950/80 border border-espresso-800 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-lg"
+          >
+            <!-- Progress Bar -->
+            <div
+              class="w-full bg-espresso-800 h-2 rounded-full mb-8 overflow-hidden"
+            >
+              <div
+                id="quizProgressBar"
+                class="bg-amber-warm h-full w-1/4 transition-all duration-300"
+              ></div>
+            </div>
+
+            <!-- Steps Container -->
+            <div id="quizContainer">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT OUR BEANS SECTION -->
+      <section id="about" class="py-20 bg-espresso-100/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <!-- Images Composition -->
+            <div class="relative">
+              <div
+                class="relative z-10 rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?auto=format&fit=crop&w=1000&q=80"
+                  alt="Coffee bean roasting process"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div
+                class="absolute -bottom-6 -right-6 w-2/3 rounded-2xl overflow-hidden shadow-xl border-4 border-cream hidden sm:block aspect-video z-20"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80"
+                  alt="Fresh espresso pouring"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div
+                class="absolute -top-6 -left-6 bg-amber-warm text-espresso-950 p-6 rounded-2xl shadow-lg z-20 hidden sm:block"
+              >
+                <p class="font-serif text-3xl font-bold">100%</p>
+                <p class="text-xs font-semibold uppercase tracking-wider">
+                  Direct Trade Sourced
+                </p>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="space-y-6">
+              <span
+                class="text-amber-warm font-semibold text-sm tracking-widest uppercase"
+                >The Craft & Heritage</span
+              >
+              <h2
+                class="font-serif text-3xl sm:text-5xl font-bold text-espresso-950 leading-tight"
+              >
+                From High Altitude Farms directly to Your Cup
+              </h2>
+              <p class="text-espresso-700 leading-relaxed">
+                At Artisan Roast & Co., we work hand-in-hand with micro-lot
+                farmers in Ethiopia, Colombia, and Guatemala. We pay up to 40%
+                above fair-trade market prices to ensure sustainable practices
+                and exceptional bean quality.
+              </p>
+
+              <!-- Feature Badges -->
+              <div class="grid sm:grid-cols-2 gap-6 pt-4">
+                <div class="flex gap-4">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-espresso-200/60 flex items-center justify-center shrink-0 text-espresso-900"
+                  >
+                    <i data-lucide="globe" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-espresso-950">
+                      Ethical Direct Trade
+                    </h4>
+                    <p class="text-sm text-espresso-600 mt-1">
+                      Direct relationships with sustainable small-batch farmers
+                      worldwide.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-espresso-200/60 flex items-center justify-center shrink-0 text-espresso-900"
+                  >
+                    <i data-lucide="flame" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-espresso-950">
+                      Small Batch Roasting
+                    </h4>
+                    <p class="text-sm text-espresso-600 mt-1">
+                      Roasted daily on-site in small quantities to preserve
+                      aromatic oils.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="pt-6 border-t border-espresso-200 flex items-center gap-6"
+              >
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-12 h-12 rounded-full bg-espresso-900 text-cream flex items-center justify-center font-serif font-bold text-lg"
+                  >
+                    AR
+                  </div>
+                  <div>
+                    <p class="font-bold text-espresso-950 text-sm">
+                      Julian Vance
+                    </p>
+                    <p class="text-xs text-espresso-600">Head Master Roaster</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LOCATION, HOURS & RESERVATION -->
+      <section id="location" class="py-20 bg-espresso-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-2xl mx-auto mb-16">
+            <span
+              class="text-amber-warm font-semibold text-sm tracking-widest uppercase"
+              >Visit Our Flagship Cafe</span
+            >
+            <h2
+              class="font-serif text-3xl sm:text-5xl font-bold text-espresso-950 mt-2"
+            >
+              Where to Find Us
+            </h2>
+          </div>
+
+          <div class="grid lg:grid-cols-3 gap-8 items-start">
+            <!-- Info Card -->
+            <div
+              class="bg-cream border border-espresso-200 p-8 rounded-3xl space-y-6 shadow-sm"
+            >
+              <div class="space-y-4">
+                <div class="flex items-start gap-4">
+                  <div class="p-3 bg-espresso-100 rounded-xl text-espresso-800">
+                    <i data-lucide="map-pin" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-espresso-950">Address</h4>
+                    <p class="text-sm text-espresso-600 mt-1">
+                      428 Roasters Way, Artisan District<br />Seattle, WA 98101
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="p-3 bg-espresso-100 rounded-xl text-espresso-800">
+                    <i data-lucide="clock" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-espresso-950">Opening Hours</h4>
+                    <div class="text-sm text-espresso-600 mt-1 space-y-1">
+                      <p>
+                        <span class="font-medium text-espresso-800"
+                          >Mon - Fri:</span
+                        >
+                        6:30 AM - 8:00 PM
+                      </p>
+                      <p>
+                        <span class="font-medium text-espresso-800"
+                          >Sat - Sun:</span
+                        >
+                        7:30 AM - 9:00 PM
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="p-3 bg-espresso-100 rounded-xl text-espresso-800">
+                    <i data-lucide="phone" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-espresso-950">
+                      Contact & Orders
+                    </h4>
+                    <p class="text-sm text-espresso-600 mt-1">
+                      (206) 555-0182<br />hello@artisanroast.com
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onclick="openModal('reservationModal')"
+                class="w-full py-3.5 rounded-2xl bg-espresso-900 text-cream font-bold hover:bg-espresso-800 transition-colors flex items-center justify-center gap-2"
+              >
+                <i data-lucide="calendar" class="w-4 h-4"></i> Reserve Table
+                Online
+              </button>
+            </div>
+
+            <!-- Interactive Map Preview Placeholder -->
+            <div
+              class="lg:col-span-2 relative rounded-3xl overflow-hidden shadow-lg border border-espresso-200 h-96 lg:h-full min-h-[380px] bg-espresso-200 flex items-center justify-center group"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80"
+                alt="Map View"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div class="absolute inset-0 bg-espresso-950/40"></div>
+              <div class="absolute z-10 text-center px-4">
+                <div
+                  class="w-16 h-16 bg-amber-warm text-espresso-950 rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl animate-bounce"
+                >
+                  <i data-lucide="coffee" class="w-8 h-8"></i>
+                </div>
+                <span
+                  class="bg-cream text-espresso-950 font-bold px-4 py-2 rounded-full shadow-lg text-sm inline-block"
+                >
+                  Artisan Roast & Co. Flagship
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS / REVIEWS -->
+      <section id="reviews" class="py-20 bg-espresso-950 text-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-2xl mx-auto mb-16">
+            <span
+              class="text-amber-warm font-semibold text-sm tracking-widest uppercase"
+              >Patron Stories</span
+            >
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold mt-2">
+              Loved by Coffee Lovers
+            </h2>
+          </div>
+
+          <!-- Reviews Grid -->
+          <div class="grid md:grid-cols-3 gap-8">
+            <div
+              class="bg-espresso-900/60 border border-espresso-800 p-8 rounded-3xl flex flex-col justify-between"
+            >
+              <div>
+                <div class="flex text-amber-warm gap-1 mb-4">★★★★★</div>
+                <p class="text-espresso-200 text-sm leading-relaxed italic">
+                  " hands down the smoothest Cold Brew I've ever had in Seattle.
+                  The velvety nitrogen pour paired with their fresh cardamon
+                  croissants is pure morning bliss!"
+                </p>
+              </div>
+              <div
+                class="flex items-center gap-4 mt-6 pt-6 border-t border-espresso-800/80"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
+                  class="w-12 h-12 rounded-full object-cover"
+                  alt="Customer avatar"
+                />
+                <div>
+                  <h4 class="font-bold text-sm">Elena Rostova</h4>
+                  <span class="text-xs text-espresso-400"
+                    >Coffee Blogger & Food Critic</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="bg-espresso-900/60 border border-espresso-800 p-8 rounded-3xl flex flex-col justify-between"
+            >
+              <div>
+                <div class="flex text-amber-warm gap-1 mb-4">★★★★★</div>
+                <p class="text-espresso-200 text-sm leading-relaxed italic">
+                  "The Ethiopian Yirgacheffe pour-over highlights floral jasmine
+                  notes I didn't think were possible in coffee. Their brew
+                  recommendation quiz was spot on too!"
+                </p>
+              </div>
+              <div
+                class="flex items-center gap-4 mt-6 pt-6 border-t border-espresso-800/80"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+                  class="w-12 h-12 rounded-full object-cover"
+                  alt="Customer avatar"
+                />
+                <div>
+                  <h4 class="font-bold text-sm">Marcus Sterling</h4>
+                  <span class="text-xs text-espresso-400"
+                    >Verified Regular Patron</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="bg-espresso-900/60 border border-espresso-800 p-8 rounded-3xl flex flex-col justify-between"
+            >
+              <div>
+                <div class="flex text-amber-warm gap-1 mb-4">★★★★★</div>
+                <p class="text-espresso-200 text-sm leading-relaxed italic">
+                  "Amazing ambient space for remote work combined with
+                  world-class specialty coffee. The online ordering is super
+                  slick and convenient."
+                </p>
+              </div>
+              <div
+                class="flex items-center gap-4 mt-6 pt-6 border-t border-espresso-800/80"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
+                  class="w-12 h-12 rounded-full object-cover"
+                  alt="Customer avatar"
+                />
+                <div>
+                  <h4 class="font-bold text-sm">Sarah Jenkins</h4>
+                  <span class="text-xs text-espresso-400">UX Architect</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer
+      class="bg-espresso-950 text-espresso-400 border-t border-espresso-900 py-12"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+          <div class="space-y-4">
+            <div
+              class="flex items-center gap-2 text-cream font-serif font-bold text-xl"
+            >
+              <i data-lucide="coffee" class="text-amber-warm"></i> Artisan Roast
+              & Co.
+            </div>
+            <p class="text-sm">
+              Dedicated to the craft of exceptional micro-batch roasted coffee,
+              fostering community and sustainability.
+            </p>
+          </div>
+          <div>
+            <h5
+              class="text-cream font-bold text-sm uppercase tracking-wider mb-4"
+            >
+              Quick Links
+            </h5>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a href="#menu" class="hover:text-amber-warm transition-colors"
+                  >Specialty Menu</a
+                >
+              </li>
+              <li>
+                <a href="#quiz" class="hover:text-amber-warm transition-colors"
+                  >Coffee Finder Quiz</a
+                >
+              </li>
+              <li>
+                <a href="#about" class="hover:text-amber-warm transition-colors"
+                  >Ethical Sourcing</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#location"
+                  class="hover:text-amber-warm transition-colors"
+                  >Location & Hours</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h5
+              class="text-cream font-bold text-sm uppercase tracking-wider mb-4"
+            >
+              Newsletter
+            </h5>
+            <p class="text-xs mb-3">
+              Subscribe for micro-lot release alerts & private tasting invites.
+            </p>
+            <form onsubmit="handleSubscribe(event)" class="flex gap-2">
+              <input
+                type="email"
+                placeholder="Your email address"
+                required
+                class="bg-espresso-900 border border-espresso-800 text-cream px-3 py-2 rounded-xl text-sm w-full focus:outline-none focus:border-amber-warm"
+              />
+              <button
+                type="submit"
+                class="bg-amber-warm text-espresso-950 font-bold px-4 py-2 rounded-xl hover:bg-amber-gold transition-colors text-sm"
+              >
+                Join
+              </button>
+            </form>
+          </div>
+          <div>
+            <h5
+              class="text-cream font-bold text-sm uppercase tracking-wider mb-4"
+            >
+              Social
+            </h5>
+            <div class="flex gap-4">
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-espresso-900 flex items-center justify-center hover:bg-amber-warm hover:text-espresso-950 transition-colors"
+              >
+                <i data-lucide="instagram" class="w-5 h-5"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-espresso-900 flex items-center justify-center hover:bg-amber-warm hover:text-espresso-950 transition-colors"
+              >
+                <i data-lucide="facebook" class="w-5 h-5"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-espresso-900 flex items-center justify-center hover:bg-amber-warm hover:text-espresso-950 transition-colors"
+              >
+                <i data-lucide="twitter" class="w-5 h-5"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pt-8 border-t border-espresso-900 text-center text-xs flex flex-col sm:flex-row justify-between items-center gap-4"
+        >
+          <p>&copy; 2026 Artisan Roast & Co. All rights reserved.</p>
+          <div class="flex gap-6">
+            <a href="#" class="hover:text-cream">Privacy Policy</a>
+            <a href="#" class="hover:text-cream">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- SLIDE-OVER CART DRAWER -->
+    <div
+      id="cartOverlay"
+      onclick="toggleCart(false)"
+      class="fixed inset-0 bg-espresso-950/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"
+    ></div>
+    <aside
+      id="cartDrawer"
+      class="fixed top-0 right-0 h-full w-full max-w-md bg-cream z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col"
+    >
+      <!-- Header -->
+      <div
+        class="p-6 border-b border-espresso-200 flex items-center justify-between bg-espresso-100/50"
+      >
+        <div class="flex items-center gap-2">
+          <i data-lucide="shopping-bag" class="w-5 h-5 text-espresso-900"></i>
+          <h3 class="font-serif font-bold text-lg text-espresso-950">
+            Your Order Cart
+          </h3>
+        </div>
+        <button
+          onclick="toggleCart(false)"
+          class="p-2 text-espresso-600 hover:text-espresso-950 rounded-full"
+        >
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Cart Items List -->
+      <div
+        id="cartItemsContainer"
+        class="flex-grow overflow-y-auto p-6 space-y-4"
+      >
+        <!-- Dynamically populated via JS -->
+      </div>
+
+      <!-- Footer / Checkout Summary -->
+      <div
+        class="p-6 border-t border-espresso-200 bg-espresso-100/50 space-y-4"
+      >
+        <div class="space-y-2 text-sm text-espresso-700">
+          <div class="flex justify-between">
+            <span>Subtotal</span>
+            <span id="cartSubtotal" class="font-semibold text-espresso-950"
+              >$0.00</span
+            >
+          </div>
+          <div class="flex justify-between">
+            <span>Estimated Tax (8%)</span>
+            <span id="cartTax" class="font-semibold text-espresso-950"
+              >$0.00</span
+            >
+          </div>
+          <div class="flex justify-between">
+            <span>Delivery Fee</span>
+            <span id="cartDelivery" class="font-semibold text-espresso-950"
+              >$0.00</span
+            >
+          </div>
+          <div
+            class="flex justify-between text-base font-bold text-espresso-950 pt-2 border-t border-espresso-200"
+          >
+            <span>Total</span>
+            <span id="cartTotal" class="text-amber-warm">$0.00</span>
+          </div>
+        </div>
+
+        <button
+          onclick="openCheckout()"
+          id="checkoutBtn"
+          disabled
+          class="w-full py-4 rounded-2xl bg-espresso-900 text-cream font-bold hover:bg-espresso-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 shadow-lg"
+        >
+          Proceed to Checkout <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MODAL: TABLE RESERVATION -->
+    <div
+      id="reservationModal"
+      class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-espresso-950/60 backdrop-blur-sm"
+    >
+      <div
+        class="bg-cream border border-espresso-200 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative"
+      >
+        <button
+          onclick="closeModal('reservationModal')"
+          class="absolute top-6 right-6 text-espresso-500 hover:text-espresso-950"
+        >
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+
+        <div class="flex items-center gap-3 mb-6">
+          <div class="p-3 bg-amber-warm/20 rounded-2xl text-espresso-900">
+            <i data-lucide="calendar" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-serif font-bold text-xl text-espresso-950">
+              Reserve a Table
+            </h3>
+            <p class="text-xs text-espresso-600">
+              Guarantee your spot in our tasting lounge.
+            </p>
+          </div>
+        </div>
+
+        <form onsubmit="handleReservationSubmit(event)" class="space-y-4">
+          <div>
+            <label
+              class="block text-xs font-bold uppercase tracking-wider text-espresso-700 mb-1"
+              >Full Name</label
+            >
+            <input
+              type="text"
+              required
+              placeholder="John Doe"
+              class="w-full px-4 py-3 rounded-xl border border-espresso-300 focus:outline-none focus:border-espresso-800 bg-white text-sm"
+            />
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label
+                class="block text-xs font-bold uppercase tracking-wider text-espresso-700 mb-1"
+                >Date</label
+              >
+              <input
+                type="date"
+                required
+                class="w-full px-4 py-3 rounded-xl border border-espresso-300 focus:outline-none focus:border-espresso-800 bg-white text-sm"
+              />
+            </div>
+            <div>
+              <label
+                class="block text-xs font-bold uppercase tracking-wider text-espresso-700 mb-1"
+                >Time</label
+              >
+              <select
+                required
+                class="w-full px-4 py-3 rounded-xl border border-espresso-300 focus:outline-none focus:border-espresso-800 bg-white text-sm"
+              >
+                <option>08:00 AM</option>
+                <option>10:00 AM</option>
+                <option>01:00 PM</option>
+                <option>04:00 PM</option>
+                <option>06:30 PM</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label
+              class="block text-xs font-bold uppercase tracking-wider text-espresso-700 mb-1"
+              >Guests</label
+            >
+            <select
+              required
+              class="w-full px-4 py-3 rounded-xl border border-espresso-300 focus:outline-none focus:border-espresso-800 bg-white text-sm"
+            >
+              <option>1 Guest</option>
+              <option>2 Guests</option>
+              <option>3-4 Guests</option>
+              <option>5+ Guests (Party)</option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full py-3.5 rounded-xl bg-espresso-900 text-cream font-bold hover:bg-espresso-800 transition-colors mt-2"
+          >
+            Confirm Reservation
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL: CHECKOUT -->
+    <div
+      id="checkoutModal"
+      class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-espresso-950/60 backdrop-blur-sm"
+    >
+      <div
+        class="bg-cream border border-espresso-200 w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+      >
+        <button
+          onclick="closeModal('checkoutModal')"
+          class="absolute top-6 right-6 text-espresso-500 hover:text-espresso-950"
+        >
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+
+        <h3 class="font-serif font-bold text-2xl text-espresso-950 mb-2">
+          Checkout
+        </h3>
+        <p class="text-sm text-espresso-600 mb-6">
+          Complete your order details below.
+        </p>
+
+        <form onsubmit="handleCheckoutSubmit(event)" class="space-y-4">
+          <div class="space-y-3">
+            <h4
+              class="font-bold text-sm text-espresso-900 border-b border-espresso-200 pb-1"
+            >
+              Delivery Information
+            </h4>
+            <input
+              type="text"
+              placeholder="Full Name"
+              required
+              class="w-full px-4 py-2.5 rounded-xl border border-espresso-300 text-sm bg-white"
+            />
+            <input
+              type="email"
+              placeholder="Email Address"
+              required
+              class="w-full px-4 py-2.5 rounded-xl border border-espresso-300 text-sm bg-white"
+            />
+            <input
+              type="text"
+              placeholder="Delivery Address"
+              required
+              class="w-full px-4 py-2.5 rounded-xl border border-espresso-300 text-sm bg-white"
+            />
+          </div>
+
+          <div class="space-y-3 pt-2">
+            <h4
+              class="font-bold text-sm text-espresso-900 border-b border-espresso-200 pb-1"
+            >
+              Payment Method (Mock)
+            </h4>
+            <div class="grid grid-cols-2 gap-3">
+              <label
+                class="flex items-center gap-2 p-3 border border-espresso-300 rounded-xl cursor-pointer bg-white"
+              >
+                <input
+                  type="radio"
+                  name="payment"
+                  checked
+                  class="accent-espresso-900"
+                />
+                <span class="text-sm font-medium">Credit Card</span>
+              </label>
+              <label
+                class="flex items-center gap-2 p-3 border border-espresso-300 rounded-xl cursor-pointer bg-white"
+              >
+                <input
+                  type="radio"
+                  name="payment"
+                  class="accent-espresso-900"
+                />
+                <span class="text-sm font-medium">Apple Pay / Cash</span>
+              </label>
+            </div>
+            <input
+              type="text"
+              placeholder="Card Number (0000 0000 0000 0000)"
+              required
+              class="w-full px-4 py-2.5 rounded-xl border border-espresso-300 text-sm bg-white"
+            />
+          </div>
+
+          <div class="pt-4">
+            <button
+              type="submit"
+              class="w-full py-4 rounded-xl bg-amber-warm text-espresso-950 font-bold hover:bg-amber-gold transition-colors text-base shadow-lg"
+            >
+              Place Order (<span id="checkoutTotalAmount">$0.00</span>)
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div
+      id="toastContainer"
+      class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"
+    ></div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+      // MENU DATA
+      const menuItems = [
+        {
+          id: "m1",
+          name: "Velvet Nitro Cold Brew",
+          category: "coldbrew",
+          price: 5.75,
+          image:
+            "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80",
+          description:
+            "Infused with nitrogen for a silky sweet foam head and low-acidity dark chocolate finish.",
+        },
+        {
+          id: "m2",
+          name: "Signature Flat White",
+          category: "espresso",
+          price: 4.95,
+          image:
+            "https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=600&q=80",
+          description:
+            "Double shot of micro-lot espresso blended with silky micro-foamed organic whole milk.",
+        },
+        {
+          id: "m3",
+          name: "Espirito Santo Pour Over",
+          category: "espresso",
+          price: 6.25,
+          image:
+            "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80",
+          description:
+            "Single-origin Brazilian beans with crisp tasting notes of hazelnut, nectarine, and brown sugar.",
+        },
+        {
+          id: "m4",
+          name: "Kyoto Style Ice Drip",
+          category: "coldbrew",
+          price: 6.5,
+          image:
+            "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=600&q=80",
+          description:
+            "Slow 12-hour cold drip extraction using Japanese glass towers for extreme clarity of flavor.",
+        },
+        {
+          id: "m5",
+          name: "Ceremonial Matcha Latte",
+          category: "teas",
+          price: 5.5,
+          image:
+            "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80",
+          description:
+            "First-harvest Uji matcha whisked to perfection with oat milk and subtle vanilla blossom.",
+        },
+        {
+          id: "m6",
+          name: "Smoked Vanilla Cardamom Chai",
+          category: "teas",
+          price: 5.25,
+          image:
+            "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80",
+          description:
+            "House-steeped black tea spices, raw honey, topped with aromatic cinnamon dust.",
+        },
+        {
+          id: "m7",
+          name: "Almond Butter Flaky Croissant",
+          category: "pastries",
+          price: 4.75,
+          image:
+            "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80",
+          description:
+            "81-layer French butter croissant filled with toasted almond cream and powdered sugar.",
+        },
+        {
+          id: "m8",
+          name: "Dark Chocolate Ganache Tart",
+          category: "pastries",
+          price: 5.5,
+          image:
+            "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80",
+          description:
+            "70% Valrhona dark chocolate tart topped with sea salt flakes and roasted cocoa nibs.",
+        },
+      ];
+
+      // QUIZ DATA & LOGIC
+      const quizQuestions = [
+        {
+          id: "temp",
+          question: "What temperature do you prefer for your brew?",
+          options: [
+            { label: "Hot & Comforting", value: "hot" },
+            { label: "Chilled & Refreshing", value: "cold" },
+          ],
+        },
+        {
+          id: "flavor",
+          question: "Which flavor profile sounds most appealing?",
+          options: [
+            { label: "Rich, Dark Chocolate & Nuts", value: "bold" },
+            { label: "Fruity, Floral & Bright Citrus", value: "light" },
+            { label: "Spiced, Sweet & Creamy", value: "sweet" },
+          ],
+        },
+        {
+          id: "milk",
+          question: "How do you like your milk or dairy?",
+          options: [
+            { label: "Creamy Milk / Oat Milk", value: "milk" },
+            { label: "Black & Pure (No Milk)", value: "black" },
+          ],
+        },
+      ];
+
+      let quizStep = 0;
+      let quizAnswers = {};
+
+      // CART STATE
+      let cart = [];
+
+      // INITIALIZATION
+      window.onload = function () {
+        lucide.createIcons();
+        renderMenu("all");
+        renderQuizStep();
+      };
+
+      // NAVBAR SCROLL EFFECT
+      window.addEventListener("scroll", () => {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("glass-panel", "shadow-md");
+        } else {
+          navbar.classList.remove("glass-panel", "shadow-md");
+        }
+      });
+
+      // MENU RENDER & FILTER
+      function renderMenu(category) {
+        const grid = document.getElementById("menuGrid");
+        const items =
+          category === "all"
+            ? menuItems
+            : menuItems.filter((item) => item.category === category);
+
+        grid.innerHTML = items
+          .map(
+            (item) => `
+                <div class="bg-cream rounded-3xl overflow-hidden border border-espresso-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-4 right-4 bg-espresso-950/80 backdrop-blur-md text-amber-warm font-bold px-3 py-1 rounded-full text-sm">
+                            $${item.price.toFixed(2)}
+                        </span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <h3 class="font-serif font-bold text-xl text-espresso-950 group-hover:text-amber-warm transition-colors">${item.name}</h3>
+                            <p class="text-espresso-600 text-sm mt-2 leading-relaxed">${item.description}</p>
+                        </div>
+                        <button onclick="addToCart('${item.id}')" class="w-full py-3 rounded-2xl bg-espresso-900 text-cream font-semibold hover:bg-amber-warm hover:text-espresso-950 transition-all duration-200 flex items-center justify-center gap-2">
+                            <i data-lucide="plus" class="w-4 h-4"></i> Add to Order
+                        </button>
+                    </div>
+                </div>
+            `,
+          )
+          .join("");
+
+        lucide.createIcons();
+      }
+
+      function filterMenu(category) {
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          if (btn.dataset.category === category) {
+            btn.className =
+              "tab-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-espresso-900 text-cream shadow-md";
+          } else {
+            btn.className =
+              "tab-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-espresso-100 text-espresso-800 hover:bg-espresso-200";
+          }
+        });
+        renderMenu(category);
+      }
+
+      // QUIZ LOGIC
+      function renderQuizStep() {
+        const container = document.getElementById("quizContainer");
+        const progressBar = document.getElementById("quizProgressBar");
+
+        if (quizStep < quizQuestions.length) {
+          const q = quizQuestions[quizStep];
+          progressBar.style.width = `${((quizStep + 1) / (quizQuestions.length + 1)) * 100}%`;
+
+          container.innerHTML = `
+                    <div class="space-y-6">
+                        <h3 class="text-xl sm:text-2xl font-serif font-bold text-cream">${q.question}</h3>
+                        <div class="grid gap-3">
+                            ${q.options
+                              .map(
+                                (opt, idx) => `
+                                <button onclick="selectQuizOption('${q.id}', '${opt.value}')" class="text-left p-4 rounded-2xl bg-espresso-900 border border-espresso-800 hover:border-amber-warm hover:bg-espresso-800 transition-all font-medium text-cream flex items-center justify-between">
+                                    <span>${opt.label}</span>
+                                    <i data-lucide="chevron-right" class="w-5 h-5 text-amber-warm"></i>
+                                </button>
+                            `,
+                              )
+                              .join("")}
+                        </div>
+                    </div>
+                `;
+        } else {
+          // Recommendation Result
+          progressBar.style.width = "100%";
+          let recommended = menuItems[0]; // fallback
+          if (quizAnswers.temp === "cold") {
+            recommended = menuItems.find((m) => m.id === "m1") || menuItems[0];
+          } else if (quizAnswers.flavor === "light") {
+            recommended = menuItems.find((m) => m.id === "m3") || menuItems[0];
+          } else if (quizAnswers.milk === "milk") {
+            recommended = menuItems.find((m) => m.id === "m2") || menuItems[0];
+          }
+
+          container.innerHTML = `
+                    <div class="text-center space-y-6">
+                        <span class="inline-block p-3 rounded-full bg-amber-warm/20 text-amber-warm mb-2">
+                            <i data-lucide="award" class="w-8 h-8"></i>
+                        </span>
+                        <h3 class="text-2xl font-serif font-bold text-cream">Your Perfect Match:</h3>
+                        <div class="bg-espresso-900 border border-espresso-800 p-6 rounded-2xl max-w-md mx-auto text-left flex gap-4 items-center">
+                            <img src="${recommended.image}" class="w-20 h-20 rounded-xl object-cover" alt="Recommended drink">
+                            <div>
+                                <h4 class="font-serif font-bold text-lg text-cream">${recommended.name}</h4>
+                                <p class="text-xs text-espresso-300 mt-1">${recommended.description}</p>
+                                <span class="text-amber-warm font-bold text-sm block mt-2">$${recommended.price.toFixed(2)}</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 justify-center">
+                            <button onclick="addToCart('${recommended.id}'); toggleCart(true);" class="px-6 py-3 rounded-full bg-amber-warm text-espresso-950 font-bold hover:bg-amber-gold transition-colors">
+                                Add Recommended to Cart
+                            </button>
+                            <button onclick="resetQuiz()" class="px-6 py-3 rounded-full bg-espresso-800 text-cream font-medium hover:bg-espresso-700 transition-colors">
+                                Restart Quiz
+                            </button>
+                        </div>
+                    </div>
+                `;
+        }
+        lucide.createIcons();
+      }
+
+      function selectQuizOption(key, value) {
+        quizAnswers[key] = value;
+        quizStep++;
+        renderQuizStep();
+      }
+
+      function resetQuiz() {
+        quizStep = 0;
+        quizAnswers = {};
+        renderQuizStep();
+      }
+
+      // CART FUNCTIONS
+      function toggleCart(open) {
+        const drawer = document.getElementById("cartDrawer");
+        const overlay = document.getElementById("cartOverlay");
+
+        if (open) {
+          drawer.classList.remove("translate-x-full");
+          overlay.classList.remove("opacity-0", "pointer-events-none");
+        } else {
+          drawer.classList.add("translate-x-full");
+          overlay.classList.add("opacity-0", "pointer-events-none");
+        }
+      }
+
+      function addToCart(itemId) {
+        const item = menuItems.find((m) => m.id === itemId);
+        if (!item) return;
+
+        const existing = cart.find((c) => c.id === itemId);
+        if (existing) {
+          existing.quantity++;
+        } else {
+          cart.push({ ...item, quantity: 1 });
+        }
+
+        updateCartUI();
+        showToast(`Added "${item.name}" to your order.`);
+      }
+
+      function updateQuantity(itemId, delta) {
+        const index = cart.findIndex((c) => c.id === itemId);
+        if (index > -1) {
+          cart[index].quantity += delta;
+          if (cart[index].quantity <= 0) {
+            cart.splice(index, 1);
+          }
+        }
+        updateCartUI();
+      }
+
+      function updateCartUI() {
+        const container = document.getElementById("cartItemsContainer");
+        const badge = document.getElementById("cartBadge");
+        const checkoutBtn = document.getElementById("checkoutBtn");
+
+        const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+        // Badge Update
+        if (totalCount > 0) {
+          badge.innerText = totalCount;
+          badge.classList.remove("scale-0");
+        } else {
+          badge.classList.add("scale-0");
+        }
+
+        // Render Items
+        if (cart.length === 0) {
+          container.innerHTML = `
+                    <div class="text-center py-12 text-espresso-500">
+                        <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
+                        <p class="text-sm">Your cart is currently empty.</p>
+                    </div>
+                `;
+          checkoutBtn.disabled = true;
+        } else {
+          checkoutBtn.disabled = false;
+          container.innerHTML = cart
+            .map(
+              (item) => `
+                    <div class="flex items-center justify-between gap-4 p-3 rounded-2xl bg-white border border-espresso-200">
+                        <img src="${item.image}" class="w-16 h-16 rounded-xl object-cover" alt="${item.name}">
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-sm text-espresso-950">${item.name}</h4>
+                            <span class="text-xs text-amber-warm font-semibold">$${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-espresso-100 rounded-lg p-1">
+                            <button onclick="updateQuantity('${item.id}', -1)" class="w-6 h-6 rounded bg-white flex items-center justify-center text-espresso-800 font-bold hover:bg-espresso-200">-</button>
+                            <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
+                            <button onclick="updateQuantity('${item.id}', 1)" class="w-6 h-6 rounded bg-white flex items-center justify-center text-espresso-800 font-bold hover:bg-espresso-200">+</button>
+                        </div>
+                    </div>
+                `,
+            )
+            .join("");
+        }
+
+        // Calculation
+        const subtotal = cart.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0,
+        );
+        const tax = subtotal * 0.08;
+        const delivery = subtotal > 0 ? 2.5 : 0.0;
+        const total = subtotal + tax + delivery;
+
+        document.getElementById("cartSubtotal").innerText =
+          `$${subtotal.toFixed(2)}`;
+        document.getElementById("cartTax").innerText = `$${tax.toFixed(2)}`;
+        document.getElementById("cartDelivery").innerText =
+          `$${delivery.toFixed(2)}`;
+        document.getElementById("cartTotal").innerText = `$${total.toFixed(2)}`;
+        document.getElementById("checkoutTotalAmount").innerText =
+          `$${total.toFixed(2)}`;
+
+        lucide.createIcons();
+      }
+
+      // MODALS HANDLER
+      function openModal(id) {
+        document.getElementById(id).classList.remove("hidden");
+      }
+
+      function closeModal(id) {
+        document.getElementById(id).classList.add("hidden");
+      }
+
+      function openCheckout() {
+        toggleCart(false);
+        openModal("checkoutModal");
+      }
+
+      function handleReservationSubmit(e) {
+        e.preventDefault();
+        closeModal("reservationModal");
+        showToast(
+          "Table reservation request received! Check your email for confirmation.",
+        );
+      }
+
+      function handleCheckoutSubmit(e) {
+        e.preventDefault();
+        closeModal("checkoutModal");
+        cart = [];
+        updateCartUI();
+        showToast("Order placed successfully! Preparing your coffee now.");
+      }
+
+      function handleSubscribe(e) {
+        e.preventDefault();
+        showToast("Thank you for subscribing to Artisan Roast updates!");
+        e.target.reset();
+      }
+
+      // MOBILE MENU
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("hidden");
+      }
+
+      // TOAST NOTIFICATIONS
+      function showToast(message) {
+        const container = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className =
+          "toast-enter pointer-events-auto bg-espresso-950 text-cream border border-espresso-800 px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-sm font-medium";
+        toast.innerHTML = `
+                <i data-lucide="check-circle" class="w-5 h-5 text-amber-warm shrink-0"></i>
+                <span>${message}</span>
+            `;
+        container.appendChild(toast);
+        lucide.createIcons();
+
+        setTimeout(() => {
+          toast.classList.remove("toast-enter");
+          toast.classList.add("toast-exit");
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>
